@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -7,16 +8,28 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  constructor(private router : Router) { }
+  loginForm:FormGroup;
+  submitted = false;
+  constructor(private router : Router,private formBuilder:FormBuilder) { }
   HideForm : boolean;
   myVar : boolean;
   checkvalue : boolean;
   ngOnInit() {
-
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+  });
   }
+  onSubmit()
+  {
+    this.submitted = true;
 
-  RegistrationForm()
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+        return;
+    }
+  }
+RegistrationForm()
 {
   this.router.navigate(['/registration']);
 }
