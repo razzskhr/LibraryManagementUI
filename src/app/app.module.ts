@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { HomeComponent } from './home/home.component';
+import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -18,6 +19,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,ReactiveFormsModule,
     NgbModule
   ],
   providers: [],
