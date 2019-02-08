@@ -9,7 +9,9 @@ import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   loginForm:FormGroup;
+  hide=true;
   submitted = false;
+  isValid=false;
   constructor(private router : Router,private formBuilder:FormBuilder) { }
   HideForm : boolean;
   myVar : boolean;
@@ -20,24 +22,30 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
   });
   }
-  onSubmit()
-  {
-    this.submitted = true;
+  // onSubmit()
+  // {
+  //   this.submitted = true;
 
-    // stop here if form is invalid
-    if (this.loginForm.invalid) {
-        return;
-    }
-  }
+  //   // stop here if form is invalid
+  //   if (this.loginForm.invalid) {
+  //       return;
+  //   }
+  // }
 RegistrationForm()
 {
   this.router.navigate(['/registration']);
 }
 HomePage()
 {
+  if (this.loginForm.invalid) {
+          return;
+      }
   this.router.navigate(['/homePage']);
 }
-
+CreateBook()
+{
+  this.router.navigate(['/createBooks'])
+}
 // LoginForm()
 // {
 //   this.HideForm = false;
