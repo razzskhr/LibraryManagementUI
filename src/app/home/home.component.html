@@ -1,45 +1,60 @@
-<div class="row slideshow">
-  <div class="col-md-12">
-<ngb-carousel *ngIf="images">
-  <ng-template ngbSlide>
-    <div class="div1">
-    <img [src]="images[0]" alt="Random first slide"  width="90px"  height="200px">
-    </div >
-    <div class="div1">
-    <img [src]="images[1]" alt="Random first slide" width="90px"  height="200px">
-    </div >
-    <div class="div1">
-    <img [src]="images[2]" alt="Random first slide"  width="90px"  height="200px">
-    </div>
-    <div class="div1">
-        <img [src]="images[1]" alt="Random first slide"  width="90px"  height="200px">
-        </div>
-    <!-- <div class="carousel-caption">
-      <h3>10 seconds between slides...</h3>
-      <p>This carousel uses customized default values.</p>
-    </div> -->
-  </ng-template>
-  <ng-template ngbSlide>
-    <img [src]="images[1]" alt="Random second slide">
-    <div class="carousel-caption">
-      <h3>No mouse events...</h3>
-      <p>This carousel doesn't pause or resume on mouse events</p>
-    </div>
-  </ng-template>
-  <ng-template ngbSlide>
-    <img [src]="images[2]"  alt="Random third slide">
-    <div class="carousel-caption">
-      <h3>No keyboard...</h3>
-      <p>This carousel uses customized default values.</p>
-    </div>
-  </ng-template>
-  <ng-template ngbSlide>
-    <img [src]="images[3]" alt="Random fourth slide">
-    <div class="carousel-caption">
-      <h3>And no wrap after last slide.</h3>
-      <p>This carousel uses customized default values.</p>
-    </div>
-  </ng-template>
-</ngb-carousel>
+<div class="search-div">
+  <button mat-raised-button>
+    <mat-icon>add</mat-icon>create
+  </button>
+  <mat-form-field class="search-form-field" floatLabel="never">
+    <input matInput [(ngModel)]="searchKey" placeholder="search" autocomplete="off"  (keyup)="applyFilter()">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="onSearchClear()" *ngIf="searchKey">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <label><input type="checkbox" value="" [(ngModel)]="nameChecked" (onChange)="nameClick()">Option 1</label>
+  <!-- <input type="checkbox" mat-checkbox class="example-margin" [(ngModel)]="nameChecked" (change)="nameClick()" name="piscine" value="piscine">
+  <mat-checkbox class="example-margin" [(ngModel)]="authorChecked" (click)="authorClick()">Author</mat-checkbox> -->
 </div>
+<div>
+    <mat-paginator [length]="100"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+</mat-paginator>
 </div>
+<div class="mat-elevation-z8">
+    <mat-table class="book-table-container" [dataSource]="dataSource" >
+        <ng-container matColumnDef="image">
+            <mat-header-cell *matHeaderCellDef  class="headerCell">Name</mat-header-cell> 
+           <mat-cell *matCellDef="let element"><img width="40px" height="40px" src={{element.image}} alt="No image"/></mat-cell>
+         </ng-container>
+      <ng-container matColumnDef="name">
+         <mat-header-cell *matHeaderCellDef  class="headerCell">Name</mat-header-cell> 
+        <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="author">
+           <mat-header-cell *matHeaderCellDef class="headerCell">Author</mat-header-cell> 
+          <mat-cell *matCellDef="let element">{{element.author}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="description">
+             <mat-header-cell *matHeaderCellDef class="headerCell">Description</mat-header-cell> 
+            <mat-cell *matCellDef="let element">{{element.description}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="available">
+               <mat-header-cell *matHeaderCellDef class="headerCell">Available</mat-header-cell> 
+              <mat-cell *matCellDef="let element">{{element.available}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="loading">
+              <mat-footer-cell *matFooterCellDef colspan="6">
+                Loading data...
+              </mat-footer-cell>
+            </ng-container>
+            <ng-container matColumnDef="nodata">
+                <mat-footer-cell *matFooterCellDef colspan="6">
+                  No data...
+                </mat-footer-cell>
+              </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns" class="headerCell">
+  </mat-header-row>
+  <mat-row class="mat-row-id" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':dataSource!=null}"></mat-footer-row>
+  <mat-footer-row *matFooterRowDef="['nodata']" [ngClass]="{'hide':!(dataSource!=null && dataSource.data.length==0)}"></mat-footer-row>
+    </mat-table>
+  </div>
+  
