@@ -2,23 +2,23 @@
 
 <div class="login-page">
   <div class="form">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="loginForm" >
+      <!-- //(ngSubmit)="onSubmit()" -->
       <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-          <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-              <div *ngIf="f.username.errors.required">Username is required</div>
-          </div>
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="UserName" formControlName="username">
+            <mat-error>This field is mandatory.</mat-error>
+          </mat-form-field>
       </div>
       <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-              <div *ngIf="f.password.errors.required">Password is required</div>
-          </div>
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Password" formControlName="password"  [type]="hide ? 'password':'text'" />
+            <mat-error>This field is mandatory.</mat-error>
+          </mat-form-field>
       </div>
-      <button (click)="HomePage()">create</button>
+      <button   mat-raised-button color="primary" (click)="HomePage()">create</button>
       <p class="message">Already registered? <a  (click)=RegistrationForm()>Sign In</a></p>
+      <a (click)=CreateBook()>createbook</a>
     </form>
     </div>
 </div>

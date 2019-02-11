@@ -1,0 +1,84 @@
+<div>
+      <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" class="custom-control-input" id="defaultInline1" name="Books" value=""(click)="AddNew()" checked="checked">
+          <label class="custom-control-label" for="defaultInline1">Add New</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" class="custom-control-input" id="defaultInline2" name="Books" (click)="AddExisting()">
+          <label class="custom-control-label" for="defaultInline2">Add Existing</label>
+        </div>
+</div>
+  <div *ngIf="isNewBookAdded" id="booksData" >
+      <form [formGroup]="CreateNewBook" (submit)="onSubmit()"  class="form-inline" >
+        
+            <div class=col-md-4>
+                <div class="form-group">
+                    <label for="bookName">Book Name</label>
+                    <input type="text"  class="form-control" formControlName="bookName" />
+                  </div>
+            </div>
+            <div class=col-md-4>
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <input type="text"  class="form-control" formControlName="author" />
+                  </div>
+            </div>
+            <div class=col-md-4>
+                <div class="form-group">
+                    <label for="isbnNumber">ISBN Number</label>
+                    <input type="text"  class="form-control" formControlName="isbnNumber" />
+                  </div>
+            </div>
+            <div class=col-md-4>
+                <div class="form-group">
+                    <label for="edition">Edition </label>
+                    <input type="text"  class="form-control" formControlName="edition" />
+                  </div>
+            </div>
+            <div class=col-md-4>
+                <div class="form-group">
+                      <label for="publishedYear"> Published Year</label>
+                      <input type="date"  class="form-control" placeholder="yyyy-mm-dd" formControlName="publishedYear">
+                  </div>
+            </div>
+            <div class=col-md-7>
+                <button  mat-raised-button color="primary">Add</button >
+                  <button  mat-raised-button color="warn" (click)="onClose()" tabIndex="-1" style="margin: 10px;">cancel</button >
+            </div>
+      </form>
+  </div>
+  <div *ngIf="isIncreasedBooks" id="booksData">
+   <form [formGroup]="AddToExistingBooks" (submit)="onSubmit()"  class="form-inline">
+     <div class="col-md-4">
+        <div class="form-group">
+            <label for="bookName">Book Name</label>
+        <select class="form-control" placeholder="Select any..." formControlName="bookName" >
+            <!-- <option *ngFor="let role of y" [value]="role">
+                {{role}}
+            </option> -->
+            <option id="options">Physics</option>
+            <option id="options" >english</option>
+          </select>
+          </div>
+     </div>
+     <div class="col-md-4">
+     <div class="form-group">
+        <label for="isbnNumber">ISBN Number</label>
+        <input type="text"  class="form-control" formControlName="isbnNumber" />
+      </div>
+     </div>
+     <div class="col-md-4">
+    <div class="form-group">
+    <label for="edition">Edition</label>
+    <input type="text"  class="form-control" formControlName="edition" />
+    </div>
+  </div>
+  <div class=col-md-7>
+      <button  mat-raised-button color="primary">Add</button >
+        <button  mat-raised-button color="warn" (click)="onClose()" tabIndex="-1" style="margin: 10px;">cancel</button >
+  </div>
+</form>
+  </div>
+ 
+ 
+
