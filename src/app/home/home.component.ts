@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
-import {MatPaginator,MatTableDataSource,MatSort,MatSortable} from '@angular/material';
-import{UserService} from "../services/book.service";
+import {MatPaginator,MatTableDataSource,MatSort,MatSortable,MatDialog,MatDialogConfig} from '@angular/material';
+import{BookService} from "../services/book.service";
 import{Book} from "../model/book.model";
+import { Router } from '@angular/router';
 import {Observable} from 'rxjs';
+import { CreatebookdataComponent } from './../createbookdata/createbookdata.component';
 
 export interface BookElement {
   image : string;
@@ -46,8 +48,9 @@ export class HomeComponent implements OnInit {
   items;
   nameChecked : false;
   authorChecked : false;
-  books : Book[];
-  constructor(private config: NgbCarouselConfig,private usersservice : UserService) {
+  books : Book[] = [];
+  errorMessage : string;
+  constructor(private config: NgbCarouselConfig,private bookservice : BookService, private router : Router,private dialog:MatDialog) {
     config.interval = 100000;
     config.wrap = true;
     config.keyboard = true;
@@ -55,14 +58,20 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-  this.displayedColumns = [ 'image','name','author', 'description', 'available'];
-  this.usersservice.getBooks()
-      .subscribe(heroes => this.books = heroes);
-  ////this.books = this.usersservice.getBooks();
-  this.dataSource = new MatTableDataSource(this.books);
-  ////this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+  this.displayedColumns = [ 'Image','Name','Author', 'AvailableCopies', 'BlockedCopies','actions'];
 
-  this.dataSource.paginator = this.paginator;
+  this.bookservice.getBooks().subscribe(
+    booklist => {
+      this.books = booklist;
+      this.dataSource = new MatTableDataSource(this.books);
+      this.dataSource.paginator = this.paginator;
+      console.log(this.books);
+      console.log(booklist);
+    },
+    error => this.errorMessage = <any>error
+  );
+
+ 
   }
 
   onSearchClear(){
@@ -85,6 +94,36 @@ checkval :  boolean = false;
   onChange()
   {
 
+  }
+
+  deleteBook(book : Book)
+  {
+this.bookservice.deleteBook(book).subscribe(
+  data => {
+    if(data){
+      const i = this.books.findIndex(e=>e.Id===book.Id);
+    if(i!== -1){
+    this.books.splice(i,1);
+    this.dataSource = new MatTableDataSource(this.books);
+    }
+    }
+  }
+)
+  }
+
+//   CreateBook()
+// {
+//   this.router.navigate(['/createBooks'])
+// }
+
+CreateBook()
+  {
+    const dialogConfig=new MatDialogConfig();
+    dialogConfig.disableClose=true;
+    dialogConfig.autoFocus=true;
+    dialogConfig.width="70%";
+    ////sessionStorage.setItem('ListOfBooks',this.dataSource);
+    this.dialog.open(CreatebookdataComponent,dialogConfig);
   }
 
 }

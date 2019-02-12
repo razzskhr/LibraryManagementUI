@@ -1,5 +1,5 @@
 <div class="search-div">
-  <button mat-raised-button>
+  <button mat-raised-button (click)="CreateBook()">
     <mat-icon>add</mat-icon>create
   </button>
   <mat-form-field class="search-form-field" floatLabel="never">
@@ -20,26 +20,32 @@
 </div>
 <div class="mat-elevation-z8">
     <mat-table class="book-table-container" [dataSource]="dataSource" >
-        <ng-container matColumnDef="image">
-            <mat-header-cell *matHeaderCellDef  class="headerCell">Name</mat-header-cell> 
-           <mat-cell *matCellDef="let element"><img width="40px" height="40px" src={{element.image}} alt="No image"/></mat-cell>
+        <ng-container matColumnDef="Image">
+            <mat-header-cell *matHeaderCellDef  class="headerCell">image</mat-header-cell> 
+           <mat-cell *matCellDef="let element"><img width="40px" height="40px" src={{element.Image}} alt="No image"/></mat-cell>
          </ng-container>
-      <ng-container matColumnDef="name">
+      <ng-container matColumnDef="Name">
          <mat-header-cell *matHeaderCellDef  class="headerCell">Name</mat-header-cell> 
-        <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+        <mat-cell *matCellDef="let element">{{element.Name}}</mat-cell>
       </ng-container>
-      <ng-container matColumnDef="author">
+      <ng-container matColumnDef="Author">
            <mat-header-cell *matHeaderCellDef class="headerCell">Author</mat-header-cell> 
-          <mat-cell *matCellDef="let element">{{element.author}}</mat-cell>
+          <mat-cell *matCellDef="let element">{{element.Author}}</mat-cell>
         </ng-container>
-        <ng-container matColumnDef="description">
+        <ng-container matColumnDef="AvailableCopies">
              <mat-header-cell *matHeaderCellDef class="headerCell">Description</mat-header-cell> 
-            <mat-cell *matCellDef="let element">{{element.description}}</mat-cell>
+            <mat-cell *matCellDef="let element">{{element.AvailableCopies}}</mat-cell>
           </ng-container>
-          <ng-container matColumnDef="available">
+          <ng-container matColumnDef="BlockedCopies">
                <mat-header-cell *matHeaderCellDef class="headerCell">Available</mat-header-cell> 
-              <mat-cell *matCellDef="let element">{{element.available}}</mat-cell>
+              <mat-cell *matCellDef="let element">{{element.BlockedCopies}}</mat-cell>
             </ng-container>
+            <ng-container matColumnDef="actions">
+              <mat-header-cell  *matHeaderCellDef class="headerCell"> Actions </mat-header-cell>
+              <mat-cell *matCellDef="let element" >
+                <mat-icon color="warn" (click)="deleteBook(element)">delete</mat-icon>
+              </mat-cell>
+          </ng-container> 
             <ng-container matColumnDef="loading">
               <mat-footer-cell *matFooterCellDef colspan="6">
                 Loading data...

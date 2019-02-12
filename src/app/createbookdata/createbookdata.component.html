@@ -13,32 +13,36 @@
         
             <div class=col-md-4>
                 <div class="form-group">
-                    <label for="bookName">Book Name</label>
-                    <input type="text"  class="form-control" formControlName="bookName" />
+                    <label for="Name">Book Name</label>
+                    <input type="text"  class="form-control" formControlName="Name" />
                   </div>
             </div>
             <div class=col-md-4>
                 <div class="form-group">
-                    <label for="author">Author</label>
-                    <input type="text"  class="form-control" formControlName="author" />
+                    <label for="Author">Author</label>
+                    <input type="text"  class="form-control" formControlName="Author" />
+                  </div>
+            </div>
+            <div formArrayName="ISBNNumber"> 
+              <div formGroupName="0">
+            <div class=col-md-4>
+                <div class="form-group">
+                    <label for="id">ISBN Number</label>
+                    <input type="text"  class="form-control" formControlName="id" />
                   </div>
             </div>
             <div class=col-md-4>
                 <div class="form-group">
-                    <label for="isbnNumber">ISBN Number</label>
-                    <input type="text"  class="form-control" formControlName="isbnNumber" />
+                    <label for="Edition">Edition </label>
+                    <input type="text"  class="form-control" formControlName="Edition" />
                   </div>
             </div>
+          </div>
+        </div>
             <div class=col-md-4>
                 <div class="form-group">
-                    <label for="edition">Edition </label>
-                    <input type="text"  class="form-control" formControlName="edition" />
-                  </div>
-            </div>
-            <div class=col-md-4>
-                <div class="form-group">
-                      <label for="publishedYear"> Published Year</label>
-                      <input type="date"  class="form-control" placeholder="yyyy-mm-dd" formControlName="publishedYear">
+                      <label for="PublishingYear"> Published Year</label>
+                      <input type="date"  class="form-control" placeholder="yyyy-mm-dd" formControlName="PublishingYear">
                   </div>
             </div>
             <div class=col-md-7>
@@ -48,30 +52,39 @@
       </form>
   </div>
   <div *ngIf="isIncreasedBooks" id="booksData">
-   <form [formGroup]="AddToExistingBooks" (submit)="onSubmit()"  class="form-inline">
+   <form [formGroup]="AddToExistingBooks" (submit)="onExistingSubmit()"  class="form-inline">
      <div class="col-md-4">
         <div class="form-group">
-            <label for="bookName">Book Name</label>
-        <select class="form-control" placeholder="Select any..." formControlName="bookName" >
-            <!-- <option *ngFor="let role of y" [value]="role">
-                {{role}}
-            </option> -->
+            <label for="Name">Book Name</label>
+        <!-- <select class="form-control" placeholder="Select any..." formControlName="Name" >
             <option id="options">Physics</option>
             <option id="options" >english</option>
-          </select>
+          </select> -->
+
+          <mat-form-field>
+              <mat-select placeholder="Select any...">
+                <mat-option *ngFor="let book of books" [value]="book.Id">
+                  {{book.Name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
      </div>
+     <div formArrayName="ISBNNumber"> 
+        <div formGroupName="0">
      <div class="col-md-4">
      <div class="form-group">
-        <label for="isbnNumber">ISBN Number</label>
-        <input type="text"  class="form-control" formControlName="isbnNumber" />
+        <label for="id">ISBN Number</label>
+        <input type="text"  class="form-control" formControlName="id" />
       </div>
      </div>
      <div class="col-md-4">
     <div class="form-group">
-    <label for="edition">Edition</label>
-    <input type="text"  class="form-control" formControlName="edition" />
+    <label for="Edition">Edition</label>
+    <input type="text"  class="form-control" formControlName="Edition" />
     </div>
+  </div>
+  </div>
   </div>
   <div class=col-md-7>
       <button  mat-raised-button color="primary">Add</button >

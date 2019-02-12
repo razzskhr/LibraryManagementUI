@@ -1,6 +1,8 @@
 export interface Isbn {
-    isbnNumber: number;
-    occupied: boolean;
-    edition: string;
-    requestForBlock: boolean
+    id : string;
+    TrackNo : string;
+    Occupied: boolean;
+    Edition: string;
+    RequestForBlock : string;
+    Created : string;
 }

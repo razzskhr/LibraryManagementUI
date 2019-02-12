@@ -1,15 +1,18 @@
 import {Isbn} from "./isbn.model";
+import {NotificationDetails} from "./notificationDetails.Model";
 export interface Book {
-    isbn : Isbn;
-    name : string,
-author : string,
-publishingYear : string,
-numberOfCopies : number,
-availableCopies : number,
-blockedCopies: number,
-image : string,
+    
+    Author : string,
+    AvailableCopies : number,
+    BlockedCopies : number,
+    Created :  string,
+    ISBNNumber : Isbn[],
+    Id : string,
+    Image : string,
+    LastUpdated	: string,
+    Name : string,
+    Notification : NotificationDetails[],
+    NoOfCopies : number,
+    PublishingYear : string
 ////notification : [{ "email" : , "userID" : }],
-created : string,
-lastUpdated	: string,
-isActive : boolean
 }
