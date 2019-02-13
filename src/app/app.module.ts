@@ -21,12 +21,9 @@ import { CreatebookdataComponent } from './createbookdata/createbookdata.compone
 import {AuthenticationService} from './services/authenticationService';
 import{TokenInterceptor} from './services/tokenInterceptor';
 import 'hammerjs';
-<<<<<<< HEAD
 import { DashboardIndicatorComponent } from './dashboard-indicator/dashboard-indicator.component';
 import { AmChartsModule } from "@amcharts/amcharts3-angular";
-=======
 import { AuthGuard } from './services/authGuards';
->>>>>>> 9697dafad96a20e38d007e535c8232f25a6b1f75
 
 @NgModule({
   declarations: [
