@@ -19,6 +19,8 @@ import { AddbooksComponent } from './addbooks/addbooks.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { CreatebookdataComponent } from './createbookdata/createbookdata.component';
 import 'hammerjs';
+import { DashboardIndicatorComponent } from './dashboard-indicator/dashboard-indicator.component';
+import { AmChartsModule } from "@amcharts/amcharts3-angular";
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import 'hammerjs';
     RegistrationFormComponent,
     HomeComponent,
     AddbooksComponent,
-    CreatebookdataComponent
+    CreatebookdataComponent,
+    DashboardIndicatorComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,8 @@ import 'hammerjs';
     FormsModule,ReactiveFormsModule,
     NgbModule,MatCardModule, MatButtonModule,MatIconModule,MatSortModule,MatFormFieldModule,MatDatepickerModule,
     MatInputModule,BrowserAnimationsModule,MatPaginatorModule,MatTableModule,MatCheckboxModule,
-    HttpClientModule,MatRadioModule,MatNativeDateModule,MatGridListModule,MatDialogModule,MatSelectModule
+    HttpClientModule,MatRadioModule,MatNativeDateModule,MatGridListModule,MatDialogModule,MatSelectModule,
+    AmChartsModule  
   ],
   providers: [UserService,BookService],
   bootstrap: [AppComponent],
