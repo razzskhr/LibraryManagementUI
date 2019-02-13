@@ -1,35 +1,66 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-            Library Management
-          </li>
-      <!-- <p>Library Management</p> -->
-      <li class="nav-item">
-        <a class="nav-link" href="#">User Details</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="#">Disabled</a>
-      </li>
-      
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-          <div ngbDropdown class="nav-item dropdown">
-              <!-- <a ngbDropdownToggle class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a> -->
-              <mat-icon href="#"  id="dropdown01" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">account_circle</mat-icon>
-              <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01" id="dropdown2">
-                <a class="dropdown-item" href="#">Details</a>
-                <a class="dropdown-item" href="#">Change Password</a>
-                <a class="dropdown-item" href="#">feedback</a>
-              </div>
-            </div>
-    </form>
+<div class="search-div">
+  <button mat-raised-button (click)="CreateBook()">
+    <mat-icon>add</mat-icon>create
+  </button>
+  <mat-form-field class="search-form-field" floatLabel="never">
+    <input matInput [(ngModel)]="searchKey" placeholder="search" autocomplete="off"  (keyup)="applyFilter()">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="onSearchClear()" *ngIf="searchKey">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <label><input type="checkbox" value="" [(ngModel)]="nameChecked" (onChange)="nameClick()">Option 1</label>
+  <!-- <input type="checkbox" mat-checkbox class="example-margin" [(ngModel)]="nameChecked" (change)="nameClick()" name="piscine" value="piscine">
+  <mat-checkbox class="example-margin" [(ngModel)]="authorChecked" (click)="authorClick()">Author</mat-checkbox> -->
+</div>
+<div>
+    <mat-paginator [length]="100"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+</mat-paginator>
+</div>
+<div class="mat-elevation-z8">
+    <mat-table class="book-table-container" [dataSource]="dataSource" >
+        <ng-container matColumnDef="Image">
+            <mat-header-cell *matHeaderCellDef  class="headerCell">image</mat-header-cell> 
+           <mat-cell *matCellDef="let element"><img width="40px" height="40px" src={{element.Image}} alt="No image"/></mat-cell>
+         </ng-container>
+      <ng-container matColumnDef="Name">
+         <mat-header-cell *matHeaderCellDef  class="headerCell">Name</mat-header-cell> 
+        <mat-cell *matCellDef="let element">{{element.Name}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Author">
+           <mat-header-cell *matHeaderCellDef class="headerCell">Author</mat-header-cell> 
+          <mat-cell *matCellDef="let element">{{element.Author}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="AvailableCopies">
+             <mat-header-cell *matHeaderCellDef class="headerCell">Description</mat-header-cell> 
+            <mat-cell *matCellDef="let element">{{element.AvailableCopies}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="BlockedCopies">
+               <mat-header-cell *matHeaderCellDef class="headerCell">Available</mat-header-cell> 
+              <mat-cell *matCellDef="let element">{{element.BlockedCopies}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+              <mat-header-cell  *matHeaderCellDef class="headerCell"> Actions </mat-header-cell>
+              <mat-cell *matCellDef="let element" >
+                <mat-icon color="warn" (click)="deleteBook(element)">delete</mat-icon>
+              </mat-cell>
+          </ng-container> 
+            <ng-container matColumnDef="loading">
+              <mat-footer-cell *matFooterCellDef colspan="6">
+                Loading data...
+              </mat-footer-cell>
+            </ng-container>
+            <ng-container matColumnDef="nodata">
+                <mat-footer-cell *matFooterCellDef colspan="6">
+                  No data...
+                </mat-footer-cell>
+              </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns" class="headerCell">
+  </mat-header-row>
+  <mat-row class="mat-row-id" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':dataSource!=null}"></mat-footer-row>
+  <mat-footer-row *matFooterRowDef="['nodata']" [ngClass]="{'hide':!(dataSource!=null && dataSource.data.length==0)}"></mat-footer-row>
+    </mat-table>
   </div>
-</nav>
-<!-- <div class="sidenav">
-  <div>
-      <a href="#">UserDetails</a>
-      <a href="#">BookList</a>
-  </div>
-   
-  </div> -->
+  
