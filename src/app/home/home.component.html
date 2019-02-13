@@ -1,45 +1,35 @@
-<div class="row slideshow">
-  <div class="col-md-12">
-<ngb-carousel *ngIf="images">
-  <ng-template ngbSlide>
-    <div class="div1">
-    <img [src]="images[0]" alt="Random first slide"  width="90px"  height="200px">
-    </div >
-    <div class="div1">
-    <img [src]="images[1]" alt="Random first slide" width="90px"  height="200px">
-    </div >
-    <div class="div1">
-    <img [src]="images[2]" alt="Random first slide"  width="90px"  height="200px">
-    </div>
-    <div class="div1">
-        <img [src]="images[1]" alt="Random first slide"  width="90px"  height="200px">
-        </div>
-    <!-- <div class="carousel-caption">
-      <h3>10 seconds between slides...</h3>
-      <p>This carousel uses customized default values.</p>
-    </div> -->
-  </ng-template>
-  <ng-template ngbSlide>
-    <img [src]="images[1]" alt="Random second slide">
-    <div class="carousel-caption">
-      <h3>No mouse events...</h3>
-      <p>This carousel doesn't pause or resume on mouse events</p>
-    </div>
-  </ng-template>
-  <ng-template ngbSlide>
-    <img [src]="images[2]"  alt="Random third slide">
-    <div class="carousel-caption">
-      <h3>No keyboard...</h3>
-      <p>This carousel uses customized default values.</p>
-    </div>
-  </ng-template>
-  <ng-template ngbSlide>
-    <img [src]="images[3]" alt="Random fourth slide">
-    <div class="carousel-caption">
-      <h3>And no wrap after last slide.</h3>
-      <p>This carousel uses customized default values.</p>
-    </div>
-  </ng-template>
-</ngb-carousel>
-</div>
-</div>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            Library Management
+          </li>
+      <!-- <p>Library Management</p> -->
+      <li class="nav-item">
+        <a class="nav-link" href="#">User Details</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="#">Disabled</a>
+      </li>
+      
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+          <div ngbDropdown class="nav-item dropdown">
+              <!-- <a ngbDropdownToggle class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a> -->
+              <mat-icon href="#"  id="dropdown01" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">account_circle</mat-icon>
+              <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01" id="dropdown2">
+                <a class="dropdown-item" href="#">Details</a>
+                <a class="dropdown-item" href="#">Change Password</a>
+                <a class="dropdown-item" href="#">feedback</a>
+              </div>
+            </div>
+    </form>
+  </div>
+</nav>
+<!-- <div class="sidenav">
+  <div>
+      <a href="#">UserDetails</a>
+      <a href="#">BookList</a>
+  </div>
+   
+  </div> -->
