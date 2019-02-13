@@ -14,11 +14,14 @@ import{Book} from './model/book.model';
 import{Isbn} from './model/isbn.model';
 import {BookService} from './services/book.service';
 import {UserService} from './services/user.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AddbooksComponent } from './addbooks/addbooks.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { CreatebookdataComponent } from './createbookdata/createbookdata.component';
+import {AuthenticationService} from './services/authenticationService';
+import{TokenInterceptor} from './services/tokenInterceptor';
 import 'hammerjs';
+import { AuthGuard } from './services/authGuards';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,13 @@ import 'hammerjs';
     MatInputModule,BrowserAnimationsModule,MatPaginatorModule,MatTableModule,MatCheckboxModule,
     HttpClientModule,MatRadioModule,MatNativeDateModule,MatGridListModule,MatDialogModule,MatSelectModule
   ],
-  providers: [UserService,BookService],
+  providers: [UserService,BookService,AuthenticationService,  
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent],
   entryComponents:[CreatebookdataComponent]
 })

@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material';
 import { BookService} from '../services/book.service';
-import { isBoolean } from 'util';
 import{Book} from "../model/book.model";
 import{Isbn} from "../model/isbn.model";
 
@@ -22,13 +21,24 @@ AddToExistingBooks:FormGroup;
 books : Book[] = [];
 ISBN : FormGroup;
 stopSubmitOnClose : boolean = false;
+selectedBook : any;
   constructor(private formBuilder:FormBuilder,private router:Router,private bookService : BookService,
     public dialogRef: MatDialogRef<CreatebookdataComponent>) { }
 
 getBookData()
 {
+  var elementId = [];
   this.bookService.getBooks().subscribe(
     booklist => {
+      this.books = booklist
+    //   this.books = booklist.filter(el => {
+    //     if (elementId.indexOf(el.Id) === -1) {
+    //         elementId.push(el.Id);
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // });
        booklist.forEach(x=>this.books.push(x));
     },
   );
@@ -49,7 +59,8 @@ getBookData()
     
     this.AddToExistingBooks=this.formBuilder.group(
       {
-        Name:['',Validators.required],
+        ////book:['',Validators.required],
+        ////Id:['',Validators.required],
         ISBNNumber : this.formBuilder.array([
           this.AddISBN()
          ])
@@ -59,7 +70,7 @@ getBookData()
   AddISBN() : FormGroup{
    return this.formBuilder.group(
       {
-      id:['',Validators.required],
+      TrackNo:['',Validators.required],
       Edition:['',Validators.required],
       });
   }
@@ -72,7 +83,15 @@ getBookData()
     }
     this.submit=true;
     this.bookService.postBook(this.CreateNewBook.value).subscribe(
-      data => console.log(data)
+      data => 
+      {
+        if(data)
+        {
+          console.log("add success")
+          this.dialogRef.close();
+        }
+        
+      }
     );
   }
   onExistingSubmit()
@@ -82,7 +101,8 @@ getBookData()
       this.stopSubmitOnClose = false;
       return;
     }
-    this.bookService.postExistingBook(this.AddToExistingBooks.value).subscribe(
+    console.log(this.selectedBook);
+    this.bookService.postExistingBook(this.AddToExistingBooks.value,this.selectedBook).subscribe(
       data => console.log(data)
     );
   }
@@ -90,14 +110,15 @@ getBookData()
      this.CreateNewBook.setValue({
        Name: '',
        Author: '',
-       ISBNNumber : [{"id" : "","Edition" : ""}],
+       ISBNNumber : [{"TrackNo" : "","Edition" : ""}],
        PublishingYear: '',
      });
    }
   initializeAddToExistingBooksGroup() {
     this.AddToExistingBooks.setValue({
-      bookName: '',
-      ISBNNumber : [{"id" : "","Edition" : ""}],
+      ////book: '',
+      ////Id: '',
+      ISBNNumber : [{"TrackNo" : "","Edition" : ""}],
     });
   }
   onClose()
@@ -120,7 +141,7 @@ getBookData()
   AddNew()
   {
    this.isNewBookAdded=true;
-  this.isIncreasedBooks=false;
+   this.isIncreasedBooks=false;
 
   }
   AddExisting()
