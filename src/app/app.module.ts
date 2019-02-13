@@ -14,13 +14,19 @@ import{Book} from './model/book.model';
 import{Isbn} from './model/isbn.model';
 import {BookService} from './services/book.service';
 import {UserService} from './services/user.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AddbooksComponent } from './addbooks/addbooks.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { CreatebookdataComponent } from './createbookdata/createbookdata.component';
+import {AuthenticationService} from './services/authenticationService';
+import{TokenInterceptor} from './services/tokenInterceptor';
 import 'hammerjs';
+<<<<<<< HEAD
 import { DashboardIndicatorComponent } from './dashboard-indicator/dashboard-indicator.component';
 import { AmChartsModule } from "@amcharts/amcharts3-angular";
+=======
+import { AuthGuard } from './services/authGuards';
+>>>>>>> 9697dafad96a20e38d007e535c8232f25a6b1f75
 
 @NgModule({
   declarations: [
@@ -41,7 +47,13 @@ import { AmChartsModule } from "@amcharts/amcharts3-angular";
     HttpClientModule,MatRadioModule,MatNativeDateModule,MatGridListModule,MatDialogModule,MatSelectModule,
     AmChartsModule  
   ],
-  providers: [UserService,BookService],
+  providers: [UserService,BookService,AuthenticationService,  
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent],
   entryComponents:[CreatebookdataComponent]
 })

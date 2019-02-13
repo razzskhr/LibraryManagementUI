@@ -1,5 +1,5 @@
 export interface Isbn {
-    id : string;
+    BookID : string;
     TrackNo : string;
     Occupied: boolean;
     Edition: string;
