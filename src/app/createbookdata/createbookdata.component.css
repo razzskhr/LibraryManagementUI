@@ -37,3 +37,8 @@
 select.form-control {
     width: 100%;
 }
+#image
+{
+  width: 100%;
+  border: none
+}

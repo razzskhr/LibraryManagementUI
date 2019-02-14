@@ -30,16 +30,8 @@ private handleError;
             }
             return true;
         }));
-        // .pipe(tap((res: Response) => {
-        //     console.log(res);
-        //     if (res) {
-        //         if (res.status === 201 || res.status === 200) {
-        //             return true
-        //         }
-        //     }
-        // }), catchError(this.handleError)
 
-        // );    
+        
         
     }
 
@@ -58,15 +50,21 @@ private handleError;
 
     registration(user : User){
         let getHeaders = new HttpHeaders({
-            'Content-Type': 'text/plain',
+            'Content-Type': 'application/json',
             'No-Auth' : 'True',
         });
         return this.http.post('https://librarymanagement20190208054654.azurewebsites.net/api/Registration',user, { headers: getHeaders })
-        .pipe(map(user => {
-            if (user) {
-                return true;
-            }
+        .pipe(map(res => {
+return true;
         }));
+        // .pipe(map((res: Response) => {
+        //     console.log(res);
+        //     if (res) {
+        //         if (res.status === 201 || res.status === 200) {
+        //             return true
+        //         }
+        //     }
+        // }), catchError(this.handleError));   
     }
 
     public getToken() : string

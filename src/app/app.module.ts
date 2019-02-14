@@ -20,10 +20,12 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { CreatebookdataComponent } from './createbookdata/createbookdata.component';
 import {AuthenticationService} from './services/authenticationService';
 import{TokenInterceptor} from './services/tokenInterceptor';
+import {ConfirmationDialogService} from './services/conformation-dialog.service';
 import 'hammerjs';
 import { AuthGuard } from './services/authGuards';
 import { AdminConfigurationComponent } from './admin-configuration/admin-configuration.component';
 import { ConfigurationService } from './services/configurationService';
+import { ConformationDialogComponent } from './conformation-dialog/conformation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { ConfigurationService } from './services/configurationService';
     HomeComponent,
     AddbooksComponent,
     CreatebookdataComponent,
-    AdminConfigurationComponent
+    AdminConfigurationComponent,
+    ConformationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,7 @@ import { ConfigurationService } from './services/configurationService';
     MatInputModule,BrowserAnimationsModule,MatPaginatorModule,MatTableModule,MatCheckboxModule,
     HttpClientModule,MatRadioModule,MatNativeDateModule,MatGridListModule,MatDialogModule,MatSelectModule
   ],
-  providers: [UserService,BookService,AuthenticationService, ConfigurationService,  
+  providers: [UserService,BookService,AuthenticationService, ConfigurationService,ConfirmationDialogService,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
@@ -51,6 +54,6 @@ import { ConfigurationService } from './services/configurationService';
       multi: true
     }],
   bootstrap: [AppComponent],
-  entryComponents:[CreatebookdataComponent]
+  entryComponents:[CreatebookdataComponent,ConformationDialogComponent]
 })
 export class AppModule { }

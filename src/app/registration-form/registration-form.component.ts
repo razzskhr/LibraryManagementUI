@@ -29,6 +29,8 @@ export class RegistrationFormComponent implements OnInit {
     var keys = Object.keys(this.genderValues);
     return keys.slice(keys.length / 2);
 }
+showError : boolean;
+errormsg : string;
 userKeys() : Array<string> {
   var keys = Object.keys(this.userValues);
   return keys.slice(keys.length / 2);
@@ -37,7 +39,7 @@ userKeys() : Array<string> {
     this.registerForm = this.formBuilder.group({
       FirstName:['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z ]*$')])] ,
       LastName: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z ]*$')])],
-      MiddleName: ['', Validators.required],
+      MiddleName: [''],
       UserName: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9]*$')])],
       UserID:['',Validators.required],
       Email: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z]+.[a-zA-Z]{3}$')])],
@@ -56,7 +58,7 @@ userKeys() : Array<string> {
   {
     this.router.navigate(['/login']);
   }
-get f() { return this.registerForm.controls; }
+   get f() { return this.registerForm.controls; }
 
 onSubmit() {
     this.submitted = true;
@@ -66,15 +68,21 @@ onSubmit() {
     }
 this.authService.registration(this.registerForm.value).subscribe(
   details => {
+    if(details)
+    {
+      this.showError = false;
     this.LoginForm();
+    }
   },
   error  => {
+    this.showError = true;    
+    this.errormsg = error.error;
   console.log("Error", error);
   }
   
 )
 
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value))
+    ////alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value))
     console.log(JSON.stringify(this.registerForm.value));
   }
 }

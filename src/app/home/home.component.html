@@ -1,5 +1,5 @@
 <div class="search-div">
-  <button mat-raised-button (click)="CreateBook()">
+  <button mat-raised-button (click)="CreateBook()" *ngIf="!roleType">
     <mat-icon>add</mat-icon>create
   </button>
   <mat-form-field class="search-form-field" floatLabel="never">
@@ -40,6 +40,12 @@
                <mat-header-cell *matHeaderCellDef class="headerCell">Available</mat-header-cell> 
               <mat-cell *matCellDef="let element">{{element.BlockedCopies}}</mat-cell>
             </ng-container>
+            <ng-container matColumnDef="edit">
+                <mat-header-cell  *matHeaderCellDef class="headerCell"> edit </mat-header-cell>
+                <mat-cell *matCellDef="let element" >
+                  <mat-icon color="warn" (click)="editBook(element)">edit</mat-icon>
+                </mat-cell>
+            </ng-container> 
             <ng-container matColumnDef="actions">
               <mat-header-cell  *matHeaderCellDef class="headerCell"> Actions </mat-header-cell>
               <mat-cell *matCellDef="let element" >
