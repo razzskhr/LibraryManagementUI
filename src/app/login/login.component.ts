@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
+import {AuthenticationService} from '../services/authenticationService'
 
 @Component({
   selector: 'app-login',
@@ -12,39 +13,49 @@ export class LoginComponent implements OnInit {
   hide=true;
   submitted = false;
   isValid=false;
-  constructor(private router : Router,private formBuilder:FormBuilder) { }
+  constructor(private router : Router,private formBuilder:FormBuilder,  private authService : AuthenticationService) { }
   HideForm : boolean;
   myVar : boolean;
   checkvalue : boolean;
+  ShowInvalidLogin : boolean;
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      UserName: ['', Validators.required],
+      Password: ['', Validators.required]
   });
   }
-  // onSubmit()
-  // {
-  //   this.submitted = true;
-
-  //   // stop here if form is invalid
-  //   if (this.loginForm.invalid) {
-  //       return;
-  //   }
-  // }
+  onSubmit()
+  {
+    this.submitted = true;
+    if (this.loginForm.invalid) {
+        return;
+    }
+    this.authService.login(this.loginForm.value).subscribe(
+      details => {
+        if(details == true)
+        {
+          this.ShowInvalidLogin = false;
+          this.authService.GetCurrentUser().subscribe(
+            data => {
+              if(data)
+              this.router.navigate(['/homePage']);
+            }
+          )
+        }
+        else
+        {
+          this.ShowInvalidLogin = true;
+        }
+      },
+      error  => {
+      console.log("Error", error);
+      this.ShowInvalidLogin = true;
+      }
+    );
+  }
 RegistrationForm()
 {
   this.router.navigate(['/registration']);
-}
-HomePage()
-{
-  if (this.loginForm.invalid) {
-          return;
-      }
-  this.router.navigate(['/homePage']);
-}
-CreateBook()
-{
-  this.router.navigate(['/createBooks'])
 }
 // LoginForm()
 // {

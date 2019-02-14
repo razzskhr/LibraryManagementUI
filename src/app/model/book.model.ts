@@ -13,6 +13,7 @@ export interface Book {
     Name : string,
     Notification : NotificationDetails[],
     NoOfCopies : number,
-    PublishingYear : string
+    PublishingYear : string,
+    BookID: string
 ////notification : [{ "email" : , "userID" : }],
 }

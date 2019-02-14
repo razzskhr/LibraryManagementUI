@@ -7,6 +7,11 @@
           <input type="radio" class="custom-control-input" id="defaultInline2" name="Books" (click)="AddExisting()">
           <label class="custom-control-label" for="defaultInline2">Add Existing</label>
         </div>
+        <div style="float: right;">
+            <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="onClose()" >
+                <mat-icon>close</mat-icon>
+              </button>
+        </div>
 </div>
   <div *ngIf="isNewBookAdded" id="booksData" >
       <form [formGroup]="CreateNewBook" (submit)="onSubmit()"  class="form-inline" >
@@ -34,7 +39,7 @@
             <div class=col-md-5>
                 <div class="form-group">
                     <label for="id">ISBN Number</label>
-                    <input type="text"  class="form-control" formControlName="id" />
+                    <input type="text"  class="form-control" formControlName="TrackNo" />
                   </div>
             </div>
             <div class=col-md-7>
@@ -57,23 +62,27 @@
             </div>
       </form>
   </div>
-  <div *ngIf="isIncreasedBooks" id="booksData">
+
+  <div *ngIf="isIncreasedBooks" id="booksData" style= "display:inline-block;">
+      <div>
+          <mat-form-field>
+              <mat-select placeholder="Select any..." [(value)]="selectedBook">
+                <mat-option *ngFor="let book of books" [value]="book.Id" >
+                  {{book.Name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
    <form [formGroup]="AddToExistingBooks" (submit)="onExistingSubmit()"  class="form-inline">
      <div class="col-md-4">
         <div class="form-group">
-            <label for="Name">Book Name</label>
+            <!-- <label for="Name">Book Name</label> -->
         <!-- <select class="form-control" placeholder="Select any..." formControlName="Name" >
             <option id="options">Physics</option>
             <option id="options" >english</option>
           </select> -->
 
-          <mat-form-field>
-              <mat-select placeholder="Select any...">
-                <mat-option *ngFor="let book of books" [value]="book.Id">
-                  {{book.Name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+     
           </div>
      </div>
      <div formArrayName="ISBNNumber"> 
@@ -81,7 +90,7 @@
      <div class="col-md-4">
      <div class="form-group">
         <label for="id">ISBN Number</label>
-        <input type="text"  class="form-control" formControlName="id" />
+        <input type="text"  class="form-control" formControlName="TrackNo" />
       </div>
      </div>
      <div class="col-md-4">
@@ -92,9 +101,9 @@
   </div>
   </div>
   </div>
-  <div class=col-md-7>
-      <button  mat-raised-button color="primary">Add</button >
-        <button  mat-raised-button color="warn" (click)="onClose()" tabIndex="-1" style="margin: 10px;">cancel</button >
+  <div >
+      <button  mat-raised-button color="primary" style="margin: 10px; float: right;">Add</button >
+        <button  mat-raised-button color="warn" (click)="onClose()" tabIndex="-1" style="margin: 10px; float: right;">cancel</button >
   </div>
 </form>
   </div>

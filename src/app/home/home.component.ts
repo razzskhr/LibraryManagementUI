@@ -6,6 +6,7 @@ import{Book} from "../model/book.model";
 import { Router } from '@angular/router';
 import {Observable} from 'rxjs';
 import { CreatebookdataComponent } from './../createbookdata/createbookdata.component';
+import { AuthenticationService } from '../services/authenticationService';
 
 export interface BookElement {
   image : string;
@@ -50,7 +51,8 @@ export class HomeComponent implements OnInit {
   authorChecked : false;
   books : Book[] = [];
   errorMessage : string;
-  constructor(private config: NgbCarouselConfig,private bookservice : BookService, private router : Router,private dialog:MatDialog) {
+  constructor(private config: NgbCarouselConfig,private bookservice : BookService, private router :
+     Router,private dialog:MatDialog, private authService : AuthenticationService) {
     config.interval = 100000;
     config.wrap = true;
     config.keyboard = true;

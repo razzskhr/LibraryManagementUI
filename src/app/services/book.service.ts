@@ -8,6 +8,7 @@ import {tap, catchError, map} from 'rxjs/operators';
 import { Book } from '../model/book.model';
 import { Isbn } from '../model/isbn.model';
 import { errorHandler } from '@angular/platform-browser/src/browser';
+import { makeParamDecorator } from '@angular/core/src/util/decorators';
 
 @Injectable()
 export class BookService {
@@ -34,23 +35,56 @@ export class BookService {
 
   deleteBook(book : Book) : any
   {
-    return this.http.delete(this.serviceUrl + book.Id).pipe(
-            map((res: Response) => {
-                if (res) {
-                    if (res.status === 201 || res.status === 200) {
-                        return true
-                    }
-                }
-            }));
+    let isbnBook = book.ISBNNumber[0];
+    isbnBook.BookID = book.Id;
+    // return this.http.delete(this.serviceUrl).pipe(
+    //         map((res: Response) => {
+    //             if (res) {
+    //                 if (res.status === 201 || res.status === 200) {
+    //                     return true
+    //                 }
+    //             }
+    //         }));
+            return this.http.request('DELETE',this.serviceUrl,{
+              body : isbnBook
+            }).pipe(
+                      map((res: Response) => {
+                          if (res) {
+                              if (res.status === 201 || res.status === 200) {
+                                  return true
+                              }
+                          }
+                      }));
     }
     postBook(book : Book) : any
     {
-      return this.http.post(this.serviceUrlForPost,book);
+      return this.http.post(this.serviceUrlForPost,book).pipe(
+        map((res: Response) => {
+          if (res !== null) {
+            // console.log(res);
+            //   if (res.status === 201 || res.status === 200) {
+            //       return true
+            //   }
+              return res
+              localStorage.setItem('addedUser', JSON.stringify(res))
+          }
+          return false
+      }));
     }
 
-    postExistingBook(isbnItem : Isbn) : any
+    postExistingBook(isbnItem : Isbn, Id : number) : any
     {
-      return this.http.post(this.serviceUrlForPost,isbnItem);
+      return this.http.post(this.serviceUrlForPost,isbnItem).pipe(
+        map((res: Response) => {
+          if (res) {
+            console.log(res);
+              if (res.status === 201 || res.status === 200) {
+                  return true
+              }
+              return false
+          }
+          return false
+      }));
     }
   
      
