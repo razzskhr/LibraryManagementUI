@@ -13,7 +13,9 @@ import { makeParamDecorator } from '@angular/core/src/util/decorators';
 @Injectable()
 export class BookService {
 
-  private serviceUrl = 'https://librarymanagement20190208054654.azurewebsites.net/api/books';
+  private GetAllBooks = 'https://librarymanagement20190208054654.azurewebsites.net/api/Books/GetAllBooks';
+  private booksURL = 'https://librarymanagement20190208054654.azurewebsites.net/api/Books';
+  private GetAllAvailableBooks = 'https://librarymanagement20190208054654.azurewebsites.net/api/Books/GetAllAvailableBooks';
   private serviceUrlForPost = 'https://librarymanagement20190208054654.azurewebsites.net/api/Books/AddNewCategoryBook';
   private handleError;
   
@@ -27,7 +29,14 @@ export class BookService {
   //    }
 
   getBooks(): Observable<Book[]> {
-      return this.http.get<Book[]>(this.serviceUrl).pipe(
+      return this.http.get<Book[]>(this.GetAllBooks).pipe(
+        tap(data => console.log('All: ' + JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+    }
+
+    getAvailableBooks(): Observable<Book[]> {
+      return this.http.get<Book[]>(this.GetAllAvailableBooks).pipe(
         tap(data => console.log('All: ' + JSON.stringify(data))),
         catchError(this.handleError)
       );
@@ -37,23 +46,10 @@ export class BookService {
   {
     let isbnBook = book.ISBNNumber[0];
     isbnBook.BookID = book.Id;
-    // return this.http.delete(this.serviceUrl).pipe(
-    //         map((res: Response) => {
-    //             if (res) {
-    //                 if (res.status === 201 || res.status === 200) {
-    //                     return true
-    //                 }
-    //             }
-    //         }));
-            return this.http.request('DELETE',this.serviceUrl,{
+            return this.http.request('DELETE',this.booksURL,{
               body : isbnBook
-            }).pipe(
-                      map((res: Response) => {
-                          if (res) {
-                              if (res.status === 201 || res.status === 200) {
-                                  return true
-                              }
-                          }
+            }) .pipe(map(res => {
+              return true;
                       }));
     }
     postBook(book : Book) : any
