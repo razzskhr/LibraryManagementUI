@@ -16,10 +16,13 @@ export class CreatebookdataComponent implements OnInit {
 submit=false;
 isNewBookAdded=true;
 isIncreasedBooks=false;
+isImageUploaded=false;
 CreateNewBook:FormGroup;
 AddToExistingBooks:FormGroup;
 books : Book[] = [];
 ISBN : FormGroup;
+url :any;
+
 stopSubmitOnClose : boolean = false;
 selectedBook : any;
   constructor(private formBuilder:FormBuilder,private router:Router,private bookService : BookService,
@@ -153,5 +156,18 @@ getBookData()
   LoginPage()
   {
     this.router.navigate(['/login']);
+  }
+  UploadImage(event)
+  {
+    this.isImageUploaded=true;
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+    reader.onload = (event: ProgressEvent) => {
+      this.url = (<FileReader>event.target).result;
+    }
+
+    reader.readAsDataURL(event.target.files[0]);
+  }
+    console.log(event);
   }
 }
