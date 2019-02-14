@@ -22,6 +22,8 @@ import {AuthenticationService} from './services/authenticationService';
 import{TokenInterceptor} from './services/tokenInterceptor';
 import 'hammerjs';
 import { AuthGuard } from './services/authGuards';
+import { AdminConfigurationComponent } from './admin-configuration/admin-configuration.component';
+import { ConfigurationService } from './services/configurationService';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { AuthGuard } from './services/authGuards';
     RegistrationFormComponent,
     HomeComponent,
     AddbooksComponent,
-    CreatebookdataComponent
+    CreatebookdataComponent,
+    AdminConfigurationComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,7 @@ import { AuthGuard } from './services/authGuards';
     MatInputModule,BrowserAnimationsModule,MatPaginatorModule,MatTableModule,MatCheckboxModule,
     HttpClientModule,MatRadioModule,MatNativeDateModule,MatGridListModule,MatDialogModule,MatSelectModule
   ],
-  providers: [UserService,BookService,AuthenticationService,  
+  providers: [UserService,BookService,AuthenticationService, ConfigurationService,  
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,

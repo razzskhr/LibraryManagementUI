@@ -7,29 +7,9 @@ import { Router } from '@angular/router';
 import {Observable} from 'rxjs';
 import { CreatebookdataComponent } from './../createbookdata/createbookdata.component';
 import { AuthenticationService } from '../services/authenticationService';
+import {ConfigurationService} from  '../services/configurationService';
 
-export interface BookElement {
-  image : string;
-  name: string;
-  author: string;
-  description: string;
-  available: number;
-}
 
-const ELEMENT_DATA: BookElement[] = [
-  { image : "https://librarymanagement.blob.core.windows.net/images/79262ed0-10e5-4bb2-bab4-463f7c39d922",
-     name: 'story', author : "ss", description: "", available: 1},
-  { image : "https://librarymanagement.blob.core.windows.net/images/79262ed0-10e5-4bb2-bab4-463f7c39d922",
-    name: 'abcs', author : "ss", description: "", available: 1},
-  { image : "https://librarymanagement.blob.core.windows.net/images/79262ed0-10e5-4bb2-bab4-463f7c39d922", name: 'bookexample', author : "ss", description: "", available: 1},
-  { image : "https://librarymanagement.blob.core.windows.net/images/79262ed0-10e5-4bb2-bab4-463f7c39d922", name: 'test', author : "ss", description: "", available: 1},
-  { image : "https://librarymanagement.blob.core.windows.net/images/79262ed0-10e5-4bb2-bab4-463f7c39d922", name: 'data', author : "ss", description: "", available: 1},
-  { image : "https://librarymanagement.blob.core.windows.net/images/79262ed0-10e5-4bb2-bab4-463f7c39d922", name: 'physics', author : "ss", description: "", available: 1},
-  { image : "", name: 'chemistry', author : "ss", description: "", available: 1},
-  { image : "", name: 'EDC', author : "ss", description: "", available: 1},
-  { image : "", name: 'BEE', author : "ss", description: "", available: 1},
-  { image : "", name: 'Drawing', author : "ss", description: "", available: 1},
-];
 
 @Component({
   selector: 'app-home',
@@ -38,9 +18,6 @@ const ELEMENT_DATA: BookElement[] = [
   providers: [NgbCarouselConfig] 
 })
 export class HomeComponent implements OnInit {
-
-  images = [1, 2, 3, 4].map(() => `https://picsum.photos/900/500?random&t=${Math.random()}`);
-  ////@ViewChild(MatSort) sort : MatSort;
   
   @ViewChild(MatPaginator) paginator : MatPaginator;
   dataSource : MatTableDataSource<any>;
@@ -51,8 +28,9 @@ export class HomeComponent implements OnInit {
   authorChecked : false;
   books : Book[] = [];
   errorMessage : string;
+  result ;
   constructor(private config: NgbCarouselConfig,private bookservice : BookService, private router :
-     Router,private dialog:MatDialog, private authService : AuthenticationService) {
+     Router,private dialog:MatDialog, private authService : AuthenticationService, private configService : ConfigurationService) {
     config.interval = 100000;
     config.wrap = true;
     config.keyboard = true;
@@ -61,6 +39,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
   this.displayedColumns = [ 'Image','Name','Author', 'AvailableCopies', 'BlockedCopies','actions'];
+  this.configService.getConfigDetails().subscribe(details => this.result = details,error => this.errorMessage = <any>error );
+
 
   this.bookservice.getBooks().subscribe(
     booklist => {
