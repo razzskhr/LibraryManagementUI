@@ -23,15 +23,21 @@
                     <input type="text"  class="form-control" formControlName="Author" />
                   </div>
             </div>
+            <div class="col-md-4"> 
+                <div class="formGroup"> 
+                  <input type="file" (change)="UploadImage($event)" id=image>
+                  <img [src]="url" height="100" *ngIf="isImageUploaded" > <br/>
+                  </div>
+            </div>
             <div formArrayName="ISBNNumber"> 
               <div formGroupName="0">
-            <div class=col-md-4>
+            <div class=col-md-5>
                 <div class="form-group">
                     <label for="id">ISBN Number</label>
                     <input type="text"  class="form-control" formControlName="id" />
                   </div>
             </div>
-            <div class=col-md-4>
+            <div class=col-md-7>
                 <div class="form-group">
                     <label for="Edition">Edition </label>
                     <input type="text"  class="form-control" formControlName="Edition" />
