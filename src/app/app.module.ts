@@ -24,6 +24,7 @@ import {ConfirmationDialogService} from './services/conformation-dialog.service'
 import 'hammerjs';
 import { AuthGuard } from './services/authGuards';
 import { ConformationDialogComponent } from './conformation-dialog/conformation-dialog.component';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { ConformationDialogComponent } from './conformation-dialog/conformation-
     FormsModule,ReactiveFormsModule,
     NgbModule,MatCardModule, MatButtonModule,MatIconModule,MatSortModule,MatFormFieldModule,MatDatepickerModule,
     MatInputModule,BrowserAnimationsModule,MatPaginatorModule,MatTableModule,MatCheckboxModule,
-    HttpClientModule,MatRadioModule,MatNativeDateModule,MatGridListModule,MatDialogModule,MatSelectModule
+    HttpClientModule,MatRadioModule,MatNativeDateModule,MatGridListModule,MatDialogModule,MatSelectModule,NgxMatSelectSearchModule
   ],
   providers: [UserService,BookService,AuthenticationService,ConfirmationDialogService,
     AuthGuard,

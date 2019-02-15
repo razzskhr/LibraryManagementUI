@@ -17,6 +17,7 @@ export class RegistrationFormComponent implements OnInit {
   registerForm: FormGroup;
   passwordFormGroup: FormGroup;
   submitted = false;
+  hide=true;
   constructor(private router : Router,private formBuilder:FormBuilder, private authService : AuthenticationService) {   }
   year=now.getFullYear();
   month=now.getMonth();
