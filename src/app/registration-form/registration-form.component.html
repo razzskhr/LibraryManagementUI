@@ -14,7 +14,7 @@
       </div>
       <div class="col-md-4" class="form-group">
           <mat-form-field class="example-full-width">
-              <input matInput placeholder="Middle Name" formControlName="MiddleName" [errorStateMatcher]="matcher">
+              <input matInput placeholder="Middle Name" formControlName="MiddleName" >
             </mat-form-field>
     </div>
       <div class="col-md-4" class="form-group">
@@ -41,7 +41,7 @@
     </div>
     <div class="col-md-4" class="form-group">
         <mat-form-field>
-            <mat-select placeholder="Select any..." [(value)]="selectedBook" formControlName="RoleType">
+            <mat-select placeholder="Select any..."  formControlName="RoleType">
                 <mat-option *ngFor="let user of userKeys()" 
                 [value]="userValues[user]">
                   {{user}}
@@ -69,7 +69,7 @@
                   </div> -->
 <div class="form-group">
     <mat-form-field>
-        <mat-select placeholder="Select any..." [(value)]="selectedBook" formControlName="Gender">
+        <mat-select placeholder="Select any..."  formControlName="Gender">
             <mat-option *ngFor="let gender of genderKeys()" 
             [value]="genderValues[gender]">
               {{gender}}
@@ -96,12 +96,12 @@
          </div>
       <div class=col-md-4 class="form-group">
           <mat-form-field class="example-full-width">
-              <input matInput placeholder="Password" formControlName="Password" [errorStateMatcher]="matcher">
+              <input matInput placeholder="Password" formControlName="Password" [errorStateMatcher]="matcher"  [type]="hide ? 'password':'text'">
             </mat-form-field>
       </div>
       <div class=col-md-6 class="form-group">
           <mat-form-field class="example-full-width">
-              <input matInput placeholder="confirmPassword" formControlName="ConfirmPassword" [errorStateMatcher]="matcher">
+              <input matInput placeholder="confirmPassword" formControlName="ConfirmPassword" [errorStateMatcher]="matcher"  [type]="hide ? 'password':'text'">
             </mat-form-field>
       </div>
     
@@ -118,6 +118,9 @@
         
       </div>
     </form>
+    <div *ngIf="showError">
+      <span  >{{errormsg}}</span>
+    </div>
   </div>
 </div>
 

@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import {Observable} from 'rxjs';
 import { CreatebookdataComponent } from './../createbookdata/createbookdata.component';
 import { AuthenticationService } from '../services/authenticationService';
+import { User, RoleType } from '../model/user.model';
+import {ConfirmationDialogService} from '../services/conformation-dialog.service'
 
 export interface BookElement {
   image : string;
@@ -50,9 +52,12 @@ export class HomeComponent implements OnInit {
   nameChecked : false;
   authorChecked : false;
   books : Book[] = [];
+  booksJSON;
   errorMessage : string;
+  roleType : boolean;
+  currentUser  : User;
   constructor(private config: NgbCarouselConfig,private bookservice : BookService, private router :
-     Router,private dialog:MatDialog, private authService : AuthenticationService) {
+     Router,private dialog:MatDialog, private authService : AuthenticationService,private confirmationDialogService: ConfirmationDialogService) {
     config.interval = 100000;
     config.wrap = true;
     config.keyboard = true;
@@ -60,15 +65,26 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-  this.displayedColumns = [ 'Image','Name','Author', 'AvailableCopies', 'BlockedCopies','actions'];
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.roleType = this.currentUser.RoleType === 0 ? true : false;
+    if(!this.roleType)
+    {
+      this.displayedColumns = [ 'Image','Name','Author', 'AvailableCopies', 'BlockedCopies','edit','actions'];
+    }
+    else
+    {
+      this.displayedColumns = [ 'Image','Name','Author', 'AvailableCopies', 'BlockedCopies'];
+    }
 
-  this.bookservice.getBooks().subscribe(
+  this.bookservice.getAvailableBooks().subscribe(
     booklist => {
       this.books = booklist;
       this.dataSource = new MatTableDataSource(this.books);
       this.dataSource.paginator = this.paginator;
-      console.log(this.books);
-      console.log(booklist);
+      ////console.log(this.books);
+
+      this.booksJSON = console.log(JSON.stringify(this.books));
+      ////console.log(booklist);
     },
     error => this.errorMessage = <any>error
   );
@@ -100,23 +116,29 @@ checkval :  boolean = false;
 
   deleteBook(book : Book)
   {
-this.bookservice.deleteBook(book).subscribe(
-  data => {
-    if(data){
-      const i = this.books.findIndex(e=>e.Id===book.Id);
-    if(i!== -1){
-    this.books.splice(i,1);
-    this.dataSource = new MatTableDataSource(this.books);
-    }
-    }
-  }
-)
+    this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to ... ?')
+    .then((confirmed) =>{
+    if(confirmed)
+    {
+      this.bookservice.deleteBook(book).subscribe(
+      data => {
+        if(data){
+          const i = this.books.findIndex(e=>e.Id===book.Id);
+        if(i!== -1){
+        this.books.splice(i,1);
+        this.dataSource = new MatTableDataSource(this.books);
+        }}})
+    }}
+     //console.log('User confirmed:', confirmed),
+    
+     )
+    .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
   }
 
-//   CreateBook()
-// {
-//   this.router.navigate(['/createBooks'])
-// }
+  editBook(book : Book)
+  {
+
+  }
 
 CreateBook()
   {
@@ -125,7 +147,10 @@ CreateBook()
     dialogConfig.autoFocus=true;
     dialogConfig.width="70%";
     ////sessionStorage.setItem('ListOfBooks',this.dataSource);
-    this.dialog.open(CreatebookdataComponent,dialogConfig);
+    let dialogRef = this.dialog.open(CreatebookdataComponent,dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      alert("popup closed");
+    });
   }
 
 }

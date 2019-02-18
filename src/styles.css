@@ -1,8 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~bootstrap/dist/css/bootstrap.css";
 .btn-dialog-close{
 width: 45px;
 min-width: 0px !important;
 height: 40px;
 padding: 0px !important
 }
+.mat-select-panel:not([class*=mat-elevation-z]) {
+    margin-top: 50px !important;
+}
+.cdk-overlay-pane.cdk-overlay-pane-select-search
+{
+    transform: translateX(-16px) translateY(21px) !important;
+}
+
+
+
+
+

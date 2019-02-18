@@ -20,10 +20,13 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { CreatebookdataComponent } from './createbookdata/createbookdata.component';
 import {AuthenticationService} from './services/authenticationService';
 import{TokenInterceptor} from './services/tokenInterceptor';
+import {ConfirmationDialogService} from './services/conformation-dialog.service';
 import 'hammerjs';
 import { DashboardIndicatorComponent } from './dashboard-indicator/dashboard-indicator.component';
 import { AmChartsModule } from "@amcharts/amcharts3-angular";
 import { AuthGuard } from './services/authGuards';
+import { ConformationDialogComponent } from './conformation-dialog/conformation-dialog.component';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,8 @@ import { AuthGuard } from './services/authGuards';
     HomeComponent,
     AddbooksComponent,
     CreatebookdataComponent,
-    DashboardIndicatorComponent
+    DashboardIndicatorComponent,
+    ConformationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -42,9 +46,9 @@ import { AuthGuard } from './services/authGuards';
     NgbModule,MatCardModule, MatButtonModule,MatIconModule,MatSortModule,MatFormFieldModule,MatDatepickerModule,
     MatInputModule,BrowserAnimationsModule,MatPaginatorModule,MatTableModule,MatCheckboxModule,
     HttpClientModule,MatRadioModule,MatNativeDateModule,MatGridListModule,MatDialogModule,MatSelectModule,
-    AmChartsModule  
+    AmChartsModule, NgxMatSelectSearchModule
   ],
-  providers: [UserService,BookService,AuthenticationService,  
+  providers: [UserService,BookService,AuthenticationService,ConfirmationDialogService,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
@@ -52,6 +56,6 @@ import { AuthGuard } from './services/authGuards';
       multi: true
     }],
   bootstrap: [AppComponent],
-  entryComponents:[CreatebookdataComponent]
+  entryComponents:[CreatebookdataComponent,ConformationDialogComponent]
 })
 export class AppModule { }

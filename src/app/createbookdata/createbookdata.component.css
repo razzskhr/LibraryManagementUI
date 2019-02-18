@@ -22,7 +22,10 @@
   background-color: #fff;
   border: 1px solid #ddd;
 }
-
+#options
+{
+  margin-top: 50px
+}
 /* .form-inline button {
   padding: 10px 20px;
   background-color: dodgerblue;
@@ -36,4 +39,9 @@
 } */
 select.form-control {
     width: 100%;
+}
+#image
+{
+  width: 100%;
+  border: none
 }
