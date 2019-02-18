@@ -15,6 +15,7 @@ export class BookService {
 
   private GetAllBooks = 'https://librarymanagement20190208054654.azurewebsites.net/api/Books/GetAllBooks';
   private booksURL = 'https://librarymanagement20190208054654.azurewebsites.net/api/Books';
+  ///private addBooksToExistingCategoryURL = 'https://librarymanagement20190208054654.azurewebsites.net/api/AddISBNDetails';
   private GetAllAvailableBooks = 'https://librarymanagement20190208054654.azurewebsites.net/api/Books/GetAllAvailableBooks';
   private serviceUrlForPost = 'https://librarymanagement20190208054654.azurewebsites.net/api/Books/AddNewCategoryBook';
   private handleError;
