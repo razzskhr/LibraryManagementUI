@@ -19,7 +19,9 @@
 </mat-paginator>
 </div>
 
-<div class="mat-elevation-z8">  
+
+
+  <div class="mat-elevation-z8 ">  
     <mat-table class="book-table-container" [dataSource]="dataSource" >
         <ng-container matColumnDef="Image">
             <mat-header-cell *matHeaderCellDef  class="headerCell">image</mat-header-cell> 
@@ -64,5 +66,9 @@
   <mat-footer-row *matFooterRowDef="['nodata']" [ngClass]="{'hide':!(dataSource!=null && dataSource.data.length==0)}"></mat-footer-row>
     </mat-table>
   </div>
+  <div class="col-md-6">
+      <app-dashboard-indicator></app-dashboard-indicator>
+   </div>
+
 
   
