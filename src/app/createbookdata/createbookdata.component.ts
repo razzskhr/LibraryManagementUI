@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit,ViewChild,AfterViewInit,OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators,FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material';
 import { BookService} from '../services/book.service';
 import{Book} from "../model/book.model";
 import{Isbn} from "../model/isbn.model";
+import { take, takeUntil } from 'rxjs/operators';
+import { ReplaySubject, Subject } from 'rxjs';
+import { MatSelect } from '@angular/material';
 
 
 @Component({
@@ -12,7 +15,7 @@ import{Isbn} from "../model/isbn.model";
   templateUrl: './createbookdata.component.html',
   styleUrls: ['./createbookdata.component.css']
 })
-export class CreatebookdataComponent implements OnInit {
+export class CreatebookdataComponent implements OnInit,AfterViewInit, OnDestroy {
 submit=false;
 isNewBookAdded=true;
 isIncreasedBooks=false;
@@ -22,8 +25,12 @@ AddToExistingBooks:FormGroup;
 books : Book[] = [];
 ISBN : FormGroup;
 url :any;
-
 stopSubmitOnClose : boolean = false;
+public bankCtrl: FormControl = new FormControl();
+public bankFilterCtrl: FormControl = new FormControl();
+protected _onDestroy = new Subject<void>();
+public filteredBanks: ReplaySubject<Book[]> = new ReplaySubject<Book[]>(1);
+@ViewChild('singleSelect') singleSelect: MatSelect;
 selectedBook : any;
   constructor(private formBuilder:FormBuilder,private router:Router,private bookService : BookService,
     public dialogRef: MatDialogRef<CreatebookdataComponent>) { }
@@ -43,6 +50,13 @@ getBookData()
     //     }
     // });
        booklist.forEach(x=>this.books.push(x));
+       this.bankCtrl.setValue(this.books);
+       this.filteredBanks.next(this.books.slice());
+       this.bankFilterCtrl.valueChanges
+       .pipe(takeUntil(this._onDestroy))
+       .subscribe(() => {
+         this.filterBanks();
+       });
     },
   );
 }
@@ -68,8 +82,15 @@ getBookData()
           this.AddISBN()
          ])
       });
-  }
 
+  }
+  ngAfterViewInit() {
+  }
+ 
+  ngOnDestroy() {
+    this._onDestroy.next();
+    this._onDestroy.complete();
+  }
   AddISBN() : FormGroup{
    return this.formBuilder.group(
       {
@@ -169,5 +190,23 @@ getBookData()
     reader.readAsDataURL(event.target.files[0]);
   }
     console.log(event);
+  }
+  protected filterBanks()
+   {
+    if (!this.books) {
+      return;
+    }
+    // get the search keyword
+    let search = this.bankFilterCtrl.value;
+    if (!search) {
+      this.filteredBanks.next(this.books.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    // filter the banks
+    this.filteredBanks.next(
+      this.books.filter(book => book.Name.toLowerCase().indexOf(search) > -1)
+    );
   }
 }

@@ -39,7 +39,7 @@
             <div class=col-md-5>
                 <div class="form-group">
                     <label for="id">ISBN Number</label>
-                    <input type="text"  class="form-control" formControlName="TrackNo" />
+                    <input type="text" class="form-control" formControlName="TrackNo" />
                   </div>
             </div>
             <div class=col-md-7>
@@ -56,35 +56,44 @@
                       <input type="date"  class="form-control" placeholder="yyyy-mm-dd" formControlName="PublishingYear">
                   </div>
             </div>
-            <div class=col-md-7>
+            <div class="col-md-6"> 
+            </div>
+            <div class="col-md-3"></div>
+            <div class=col-md-3>
+                <button  mat-raised-button color="warn" (click)="onClose()" tabIndex="-1" style="margin: 10px;">cancel</button >
                 <button  mat-raised-button color="primary">Add</button >
-                  <button  mat-raised-button color="warn" (click)="onClose()" tabIndex="-1" style="margin: 10px;">cancel</button >
             </div>
       </form>
   </div>
-
-  <div *ngIf="isIncreasedBooks" id="booksData" style= "display:inline-block;">
+  <!-- style= "display:inline-block;" -->
+  <div *ngIf="isIncreasedBooks" id="booksData" >
       <div>
           <mat-form-field>
-              <mat-select placeholder="Select any..." [(value)]="selectedBook">
-                <mat-option *ngFor="let book of books" [value]="book.Id" >
-                  {{book.Name}}
-                </mat-option>
+              <mat-select placeholder="Select any..." [(value)]="selectedBook" [formControl]="bankCtrl">
+                <div>
+                    <mat-option>
+                        <ngx-mat-select-search [formControl]="bankFilterCtrl"></ngx-mat-select-search>
+                      </mat-option>
+                  <mat-option *ngFor="let book of filteredBanks | async" [value]="book.Id" >
+                      <img with="40" height="40" src="{{book.Image}}">
+                    {{book.Name}}
+                  </mat-option>
+                </div>
               </mat-select>
             </mat-form-field>
           </div>
    <form [formGroup]="AddToExistingBooks" (submit)="onExistingSubmit()"  class="form-inline">
      <div class="col-md-4">
-        <div class="form-group">
-            <!-- <label for="Name">Book Name</label> -->
+        <!-- <div class="form-group">
+             <label for="Name">Book Name</label> -->
         <!-- <select class="form-control" placeholder="Select any..." formControlName="Name" >
             <option id="options">Physics</option>
             <option id="options" >english</option>
           </select> -->
 
      
-          </div>
-     </div>
+          <!-- </div> -->
+     </div> 
      <div formArrayName="ISBNNumber"> 
         <div formGroupName="0">
      <div class="col-md-4">
@@ -101,7 +110,7 @@
   </div>
   </div>
   </div>
-  <div >
+  <div class="col-md-12">
       <button  mat-raised-button color="primary" style="margin: 10px; float: right;">Add</button >
         <button  mat-raised-button color="warn" (click)="onClose()" tabIndex="-1" style="margin: 10px; float: right;">cancel</button >
   </div>

@@ -22,10 +22,13 @@ import {AuthenticationService} from './services/authenticationService';
 import{TokenInterceptor} from './services/tokenInterceptor';
 import {ConfirmationDialogService} from './services/conformation-dialog.service';
 import 'hammerjs';
+import { DashboardIndicatorComponent } from './dashboard-indicator/dashboard-indicator.component';
+import { AmChartsModule } from "@amcharts/amcharts3-angular";
 import { AuthGuard } from './services/authGuards';
 import { AdminConfigurationComponent } from './admin-configuration/admin-configuration.component';
 import { ConfigurationService } from './services/configurationService';
 import { ConformationDialogComponent } from './conformation-dialog/conformation-dialog.component';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,7 @@ import { ConformationDialogComponent } from './conformation-dialog/conformation-
     AddbooksComponent,
     CreatebookdataComponent,
     AdminConfigurationComponent,
+    DashboardIndicatorComponent,
     ConformationDialogComponent
   ],
   imports: [
@@ -44,7 +48,8 @@ import { ConformationDialogComponent } from './conformation-dialog/conformation-
     FormsModule,ReactiveFormsModule,
     NgbModule,MatCardModule, MatButtonModule,MatIconModule,MatSortModule,MatFormFieldModule,MatDatepickerModule,
     MatInputModule,BrowserAnimationsModule,MatPaginatorModule,MatTableModule,MatCheckboxModule,
-    HttpClientModule,MatRadioModule,MatNativeDateModule,MatGridListModule,MatDialogModule,MatSelectModule
+    HttpClientModule,MatRadioModule,MatNativeDateModule,MatGridListModule,MatDialogModule,MatSelectModule,
+    AmChartsModule, NgxMatSelectSearchModule
   ],
   providers: [UserService,BookService,AuthenticationService, ConfigurationService,ConfirmationDialogService,
     AuthGuard,
